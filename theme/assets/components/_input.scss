@@ -5,26 +5,36 @@
     border: 0;
     font-size: 14px;
     outline: none;
-  }
-  
-  .input--textarea {
+}
+
+.input--textarea {
     padding-bottom: 30px;
     resize: vertical;
-  }
-  
-  .input--raw {
+}
+
+.input--raw {
     padding: 31px 30px 29px;
     border: 3px solid #eee;
-  }
-  
-  .input--drag-down {
+}
+
+.input--drag-down {
     margin-bottom: -30px;
-  }
-  
-  .input--url-holder {
+}
+
+.input--url-holder {
     font-size: 13px;
     padding: 9px 20px 8px 0;
-    border-bottom: 2px solid #B6D8FF;
+    border-bottom: 2px solid #b6d8ff;
     text-overflow: ellipsis;
-  }
-  
+}
+
+.input--auth-password {
+    border: 2px solid #dadada;
+    padding: 9px 10px 8px 10px;
+    transition: border-color 0.2s ease-out;
+
+    &:focus,
+    &:active {
+        border-color: #b6d8ff;
+    }
+}

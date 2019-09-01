@@ -17,7 +17,12 @@ import (
 
 // IndexAction handles the homepage
 func IndexAction(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, RenderLayout("index.hbs", map[string]string{}))
+	layoutName := "index.hbs"
+	if Config.App.CreationPassword != "" {
+		layoutName = "auth.hbs"
+	}
+
+	fmt.Fprintf(w, RenderLayout(layoutName, map[string]string{}))
 }
 
 // ShowAction handles a single message
@@ -172,6 +177,45 @@ func NewMessageAction(w http.ResponseWriter, r *http.Request) {
 
 	res, err := json.Marshal(map[string]string{
 		"token": message.Token,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	w.Write(res)
+}
+
+type authType struct {
+	Password string
+}
+
+// AuthAction will handle authentication requests
+func AuthAction(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	decoder := json.NewDecoder(r.Body)
+	authRequest := authType{}
+
+	err := decoder.Decode(&authRequest)
+	if err != nil {
+		panic(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	if Config.App.CreationPassword != authRequest.Password {
+
+		res, _ := json.Marshal(map[string]string{
+			"error": "credentials.invalid",
+		})
+
+		w.Write(res)
+		w.WriteHeader(400)
+		return
+	}
+
+	res, err := json.Marshal(map[string]string{
+		"token": "JWT.bla token",
 	})
 
 	if err != nil {

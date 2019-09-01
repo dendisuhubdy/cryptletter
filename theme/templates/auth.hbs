@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> "partials/head.hbs" }}
+
+<body class="page page--homepage is--not-ready">
+    {{> "partials/noscript.hbs" }}
+
+    <div class="page__container page__container--small">
+        {{> "partials/header.hbs" }}
+        {{> "partials/errors.hbs" }}
+
+        <div class="letter letter--striped letter--spaced">
+            <div class="letter__body">
+                <label for="password">Password</label>
+                <input id="password" type="password" class="input input--auth-password" autocomplete="off"
+                    autofocus="autofocus" />
+            </div>
+            <div class="letter__footer letter__footer--separator">
+                <div class="u--hint">
+                    This Cryptletter instance is password protected. You need a valid password to create letters.
+                </div>
+            </div>
+        </div>
+
+        <div class="u--center">
+            <button class="btn btn--primary js--authenticate">Continue</button>
+        </div>
+    </div>
+    {{> "partials/foot.hbs" }}
+
+    <script type="text/template" id="template-result-format">{{> "text/index--result-template.hbs"}}</script>
+</body>
+
+</html>

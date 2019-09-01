@@ -6,6 +6,30 @@ import encodingUTF8 from 'crypto-js/enc-utf8';
 import sha512 from 'crypto-js/sha512';
 
 /**
+ * Set Cookie
+ * @param {string} name
+ * @param {string} value
+ * @param {number} days
+ */
+var setCookie = function(name, value, days) {
+    var expires = '';
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = '; expires=' + date.toUTCString();
+    }
+    document.cookie = name + '=' + (value || '') + expires + '; path=/';
+};
+
+/**
+ * Erase Cookie
+ * @param {string} name
+ */
+var eraseCookie = function(name) {
+    document.cookie = name + '=; Max-Age=-99999999;';
+};
+
+/**
  * Generate secret key
  */
 var generateSecretKey = function() {
@@ -178,6 +202,31 @@ function slideDown(el) {
 
 (function() {
     var secret = generateSecretKey();
+
+    document.querySelectorAll('.js--authenticate').forEach(node => {
+        node.addEventListener('click', function(e) {
+            const $submitButton = e.target;
+            const $input = document.querySelector('#password');
+
+            const password = $input.value;
+
+            // disable button while processing
+            $submitButton.disabled = true;
+            $input.disabled = true;
+
+            postData('/auth', { password })
+                .then(res => {
+                    if (res.token) {
+                        res.token;
+                        setCookie('auth', res.token, 356);
+                    }
+                })
+                .catch(function() {
+                    // TODO: implement slideDown by class
+                    slideDown(document.getElementById('error'));
+                });
+        });
+    });
 
     // Encrypt page
     document.querySelectorAll('.js--encrypt-message').forEach(node => {

@@ -1,16 +1,22 @@
-.utils {}
+.utils {
+}
 
 .u--danger {
-  color: #DA4646;
+    color: #da4646;
+}
+
+.u--hint {
+    font-size: 14px;
+    color: #aaa;
 }
 
 .u--center {
-  text-align: center;
+    text-align: center;
 }
 
 // Javacript helper
 
 [data-view],
 [data-stage] {
-  display: none;
+    display: none;
 }

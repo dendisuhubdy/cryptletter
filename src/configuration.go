@@ -30,6 +30,7 @@ type app struct {
 	TemplatesDir             string
 	AssetsDir                string
 	DefaultTTLForNewMessages int64
+	CreationPassword         string
 }
 
 type debug struct {
@@ -71,6 +72,7 @@ func NewConfiguration() Configuration {
 	cfg.App.TemplatesDir = "./theme/templates"
 	cfg.App.AssetsDir = "public"
 	cfg.App.DefaultTTLForNewMessages = 43830
+	cfg.App.CreationPassword = ""
 
 	cfg.Debug.LogLevel = 0
 
